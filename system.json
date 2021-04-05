@@ -21,8 +21,8 @@
   "gridUnits": "yd",
   "primaryTokenAttribute": "HP",
   "secondaryTokenAttribute": "FP",
-  "url": "https://github.com/crnormand/gurps",
-  "manifest": "https://raw.githubusercontent.com/crnormand/gurps/release/system.json",
-  "download": "https://github.com/crnormand/gurps/archive/0.8.22.zip",
+  "url": "https://github.com/crimzie/gurpsf",
+  "manifest": "https://raw.githubusercontent.com/crimzie/gurpsf/main/system.json",
+  "download": "https://github.com/crimzie/gurpsf/archive/refs/tags/0.8.22c.zip",
   "license": "LICENSE.txt"
 }
