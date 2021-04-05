@@ -1,8 +1,8 @@
 {
   "name": "gurps",
-  "title": "GURPS 4th Edition Game Aid (Unofficial)",
+  "title": "GURPS 4th Edition Game Aid (Unofficial) fork",
   "description": "A game aid to help play GURPS 4e for Foundry VTT (GCS/GCA edition)",
-  "version": "0.8.22",
+  "version": "0.8.22c",
   "minimumCoreVersion": "0.7.5",
   "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,
@@ -15,21 +15,6 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json"
-    },
-    {
-      "lang": "pt-BR",
-      "name": "Português (Brasil)",
-      "path": "lang/pt_br.json"
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch (German)",
-      "path": "lang/de.json"
-    },
-    {
-      "lang": "ru",
-      "name": "русский (Russian)",
-      "path": "lang/ru.json"
     }
   ],
   "gridDistance": 1,
