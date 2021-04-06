@@ -2,7 +2,7 @@
   "name": "gurpsf",
   "title": "GURPS 4th Edition Game Aid (Unofficial) fork",
   "description": "A game aid to help play GURPS 4e for Foundry VTT (GCS/GCA edition)",
-  "version": "0.8.221",
+  "version": "0.8.22.2",
   "minimumCoreVersion": "0.7.5",
   "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,
@@ -23,6 +23,6 @@
   "secondaryTokenAttribute": "FP",
   "url": "https://github.com/crimzie/gurpsf",
   "manifest": "https://raw.githubusercontent.com/crimzie/gurpsf/main/system.json",
-  "download": "https://github.com/crimzie/gurpsf/archive/refs/tags/0.8.22c.zip",
+  "download": "https://github.com/crimzie/gurpsf/archive/refs/tags/0.8.22.2.zip",
   "license": "LICENSE.txt"
 }
