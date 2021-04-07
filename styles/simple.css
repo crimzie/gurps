@@ -2211,25 +2211,25 @@ body {
 .gurps-group .results-table {
   justify-self: stretch;
   width: 100%;
-  grid-template-columns: auto min-content 1fr;
+  grid-template-columns: auto auto 1fr;
   min-height: 130px;
   font-size: 12px;
 }
 
 .gurps-group .results-table > div:nth-child(3n + 1) {
   text-transform: uppercase;
+  font-size: smaller;
 }
 
 .gurps-group .results-table > div:nth-child(3n + 1),
 .gurps-group .results-table > div:nth-child(3n + 2) {
   text-align: end;
   padding-right: 0.5em;
-  font-size: smaller;
 }
 
 .gurps-group .results-table > div:nth-child(3n + 2) {
   font-weight: bolder;
-  font-size: larger;
+  font-size: small;
 }
 
 .gurps-group .results-table > div:nth-child(3n + 3) {
@@ -2237,6 +2237,7 @@ body {
   justify-content: center;
   padding-left: 1em;
   text-indent: -1em;
+  font-size: smaller;
 }
 
 .with-button {
@@ -2853,6 +2854,7 @@ ul#result-effects li {
   justify-content: center;
 }
 
+.gurps-group .vertical-center,
 .resource-editor .vertical-center {
   display: flex;
   align-items: center;

@@ -19,6 +19,7 @@ import { ThreeD6 } from '../lib/threed6.js'
 import { doRoll } from '../module/dierolls/dieroll.js'
 import { ResourceTrackerManager } from './actor/resource-tracker-manager.js'
 import { DamageTables, initializeDamageTables } from '../module/damage/damage-tables.js'
+import SlamChatProcessor from '../module/slam.js'
 
 export const GURPS = {}
 window.GURPS = GURPS // Make GURPS global!
@@ -43,7 +44,6 @@ import DamageChat from './damage/damagechat.js'
 import handlebarHelpers from '../lib/moustachewax.js'
 import * as settings from '../lib/miscellaneous-settings.js'
 import jqueryHelpers from '../lib/jquery-helper.js'
-import { NpcInput } from '../lib/npc-input.js'
 import addChatHooks from './chat.js'
 
 import GURPSConditionalInjury from './injury/foundry/conditional-injury.js'
@@ -1424,6 +1424,7 @@ Hooks.once('init', async function () {
   // set up all hitlocation tables (must be done before MB)
   HitLocation.init()
   DamageChat.initSettings()
+  SlamChatProcessor.initialize()
 
   // Modifier Bucket must be defined after hit locations
   GURPS.ModifierBucket = new ModifierBucket({
@@ -1533,11 +1534,10 @@ Hooks.once('ready', async function () {
   Hooks.on('hotbarDrop', async (bar, data, slot) => {
     console.log(data)
     if (!data.otf) return
-    let cmd = `GURPS.executeOTF('${data.otf}')`
+    let cmd = "GURPS.executeOTF(`" + data.otf + "`)"    // Surround OTF in backticks... to allow single and double quotes in OtF
     let name = `OtF: ${data.otf}`
     if (!!data.actor) {
-      cmd = `let actor = game.actors.get('${data.actor}')
-GURPS.SetLastActor(actor)
+      cmd = `GURPS.SetLastActor(game.actors.get('${data.actor}'))
 ` + cmd
       name = game.actors.get(data.actor).name + " " + name
     }
@@ -1669,22 +1669,20 @@ GURPS.SetLastActor(actor)
         width: grid_size,
         releaseOthers: true,
       })
-      
-      let handleDamage = (actor) => {   // Reset selection back to original, and drop damage
-        for (let t of game.user.targets) {
-          t.setTarget(false, { releaseOthers: false, groupSelection: true })
-        }
-        oldselection.forEach(t => {
-          t.setTarget(true, { releaseOthers: false, groupSelection: true })
-        })
-        actor.handleDamageDrop(dropData.payload)
+      let targets = [...game.user.targets]
+
+      // Now that we have the list of targets, reset the target selection back to whatever the user had
+      for (let t of game.user.targets) {
+        t.setTarget(false, { releaseOthers: false, groupSelection: true })
       }
+      oldselection.forEach(t => {
+        t.setTarget(true, { releaseOthers: false, groupSelection: true })
+      })
 
       // actual targets are stored in game.user.targets
-      if (game.user.targets.size === 0) return false
-      if (game.user.targets.size === 1) {
-        let targets = [...game.user.targets]
-        handleDamage(targets[0].actor)
+      if (targets.length === 0) return false
+      if (targets.length === 1) {
+        targets[0].actor.handleDamageDrop(dropData.payload)
         return false
       }
 
@@ -1694,8 +1692,8 @@ GURPS.SetLastActor(actor)
           label: game.i18n.localize('GURPS.addApply'),
           callback: html => {
             let name = html.find('select option:selected').text().trim()
-            let target = [...game.user.targets].find(token => token.name === name)
-            handleDamage(target.actor)
+            let target = targets.find(token => token.name === name)
+            target.actor.handleDamageDrop(dropData.payload)
           },
         },
       }
@@ -1704,11 +1702,11 @@ GURPS.SetLastActor(actor)
         {
           title: game.i18n.localize('GURPS.selectToken'),
           content: await renderTemplate('systems/gurps/templates/apply-damage/select-token.html', {
-            tokens: game.user.targets,
+            tokens: targets,
           }),
           buttons: buttons,
           default: 'apply',
-          tokens: game.user.targets,
+          tokens: targets,
         },
         { width: 300 }
       )

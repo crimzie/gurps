@@ -8,7 +8,13 @@
   "templateVersion": 2,
   "author": "Chris Normand/Nose66",
   "esmodules": ["module/gurps.js"],
-  "styles": ["styles/simple.css", "styles/css_boilerplate.css", "styles/simplified.css", "styles/npc-input.css"],
+  "styles": [
+    "styles/simple.css",
+    "styles/css_boilerplate.css",
+    "styles/simplified.css",
+    "styles/npc-input.css",
+    "styles/apps.css"
+  ],
   "packs": [],
   "languages": [
     {
