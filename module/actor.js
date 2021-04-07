@@ -36,17 +36,17 @@ export class GurpsActor extends Actor {
       let m = parseInt(level0.move)
       let d = parseInt(level0.dodge)
       if (isReeling) {
-        m = Math.ceil(m / 2)
-        d = Math.ceil(d / 2)
+        m = m / 2
+        d = d - 4
       }
       if (isTired) {
-        m = Math.ceil(m / 2)
-        d = Math.ceil(d / 2)
+        m = m / 2
+        d = d - 4
       }
       for (let enckey in encs) {
         let enc = encs[enckey]
-        let t = 1.0 - (0.2 * parseInt(enc.level))
-        enc.currentmove = Math.max(1, Math.floor(m * t))
+        let t = 1.0 - 0.2 * parseInt(enc.level)
+        enc.currentmove = Math.max(1, m * t)
         enc.currentdodge = Math.max(1, d - parseInt(enc.level))
         if (enc.current) {
           // Save the global move/dodge
@@ -1277,7 +1277,9 @@ export class GurpsActor extends Actor {
 
   getTorsoDr() {
     if (!this.data.data.hitlocations) return 0
-    let hl = Object.values(this.data.data.hitlocations).find(h => h.penalty == 0)
+    let locations = Object.values(this.data.data.hitlocations)
+    let max = Math.max(locations.map(x => x.value.penalty))
+    let hl = locations.find(h => h.penalty == max)
     return !!hl ? hl.dr : 0
   }
 
@@ -1520,7 +1522,7 @@ export class Ranged extends Attack {
 export class Encumbrance {
   key = ''
   level = 0
-  dodge = 9
+  dodge = 10
   weight = ''
   move = ''
   current = false

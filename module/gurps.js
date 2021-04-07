@@ -84,69 +84,92 @@ GURPS.ChatCommandsInProcess = [] // Taking advantage of synchronous nature of JS
 GURPS.attributepaths = {
   ST: 'attributes.ST.value',
   DX: 'attributes.DX.value',
+  RF: 'attributes.RF.value',
+  AW: 'attributes.AW.value',
+  CH: 'attributes.CH.value',
   IQ: 'attributes.IQ.value',
-  HT: 'attributes.HT.value',
-  WILL: 'attributes.WILL.value',
-  Will: 'attributes.WILL.value',
-  PER: 'attributes.PER.value',
-  Per: 'attributes.PER.value',
+  TC: 'attributes.TC.value',
+  WL: 'attributes.WL.value',
+  ED: 'attributes.ED.value',
 }
 
 // Map stuff back to translation keys... don't know if useful yet
 GURPS.attributes = {
   ST: 'GURPS.attributesST',
   DX: 'GURPS.attributesDX',
+  RF: 'GURPS.attributesRF',
+  AW: 'GURPS.attributesAW',
+  CH: 'GURPS.attributesCH',
   IQ: 'GURPS.attributesIQ',
-  HT: 'GURPS.attributesHT',
-  Will: 'GURPS.attributesWILL',
-  Per: 'GURPS.attributesPER',
+  TC: 'GURPS.attributesTC',
+  WL: 'GURPS.attributesWL',
+  ED: 'GURPS.attributesED',
 }
 
 GURPS.attributeNames = {
   ST: 'GURPS.attributesSTNAME',
   DX: 'GURPS.attributesDXNAME',
+  RF: 'GURPS.attributesRFNAME',
+  AW: 'GURPS.attributesAWNAME',
+  CH: 'GURPS.attributesCHNAME',
   IQ: 'GURPS.attributesIQNAME',
-  HT: 'GURPS.attributesHTNAME',
-  Will: 'GURPS.attributesWILLNAME',
-  Per: 'GURPS.attributesPERNAME',
+  TC: 'GURPS.attributesTCNAME',
+  WL: 'GURPS.attributesWLNAME',
+  ED: 'GURPS.attributesEDNAME',
 }
 
 GURPS.skillTypes = {
-  'DX/E': 'GURPS.SkillDXE',
-  'DX/A': 'GURPS.SkillDXA',
-  'DX/H': 'GURPS.SkillDXH',
+  'DX/E':  'GURPS.SkillDXE',
+  'DX/A':  'GURPS.SkillDXA',
+  'DX/H':  'GURPS.SkillDXH',
   'DX/VH': 'GURPS.SkillDXVH',
 
-  'IQ/E': 'GURPS.SkillIQE',
-  'IQ/A': 'GURPS.SkillIQA',
-  'IQ/H': 'GURPS.SkillIQH',
+  'RF/E':  'GURPS.SkillRFE',
+  'RF/A':  'GURPS.SkillRFA',
+  'RF/H':  'GURPS.SkillRFH',
+  'RF/VH': 'GURPS.SkillRFVH',
+
+  'AW/E':  'GURPS.SkillAWE',
+  'AW/A':  'GURPS.SkillAWA',
+  'AW/H':  'GURPS.SkillAWH',
+  'AW/VH': 'GURPS.SkillAWVH',
+
+  'CH/E':  'GURPS.SkillCHE',
+  'CH/A':  'GURPS.SkillCHA',
+  'CH/H':  'GURPS.SkillCHH',
+  'CH/VH': 'GURPS.SkillCHVH',
+
+  'IQ/E':  'GURPS.SkillIQE',
+  'IQ/A':  'GURPS.SkillIQA',
+  'IQ/H':  'GURPS.SkillIQH',
   'IQ/VH': 'GURPS.SkillIQVH',
 
-  'HT/E': 'GURPS.SkillHTE',
-  'HT/A': 'GURPS.SkillHTA',
-  'HT/H': 'GURPS.SkillHTH',
-  'HT/VH': 'GURPS.SkillHTVH',
+  'TC/E':  'GURPS.SkillTCE',
+  'TC/A':  'GURPS.SkillTCA',
+  'TC/H':  'GURPS.SkillTCH',
+  'TC/VH': 'GURPS.SkillTCVH',
 
-  'Will/E': 'GURPS.SkillWillE',
-  'Will/A': 'GURPS.SkillWillA',
-  'Will/H': 'GURPS.SkillWillH',
-  'Will/VH': 'GURPS.SkillWillVH',
+  'WL/E':  'GURPS.SkillWLE',
+  'WL/A':  'GURPS.SkillWLA',
+  'WL/H':  'GURPS.SkillWLH',
+  'WL/VH': 'GURPS.SkillWLVH',
 
-  'Per/E': 'GURPS.SkillPerE',
-  'Per/A': 'GURPS.SkillPerA',
-  'Per/H': 'GURPS.SkillPerH',
-  'Per/VH': 'GURPS.SkillPerVH',
+  'ED/E':  'GURPS.SkillEDE',
+  'ED/A':  'GURPS.SkillEDA',
+  'ED/H':  'GURPS.SkillEDH',
+  'ED/VH': 'GURPS.SkillEDVH',
 }
 
 GURPS.PARSELINK_MAPPINGS = {
   ST: 'attributes.ST.value',
   DX: 'attributes.DX.value',
+  RF: 'attributes.RF.value',
+  AW: 'attributes.AW.value',
+  CH: 'attributes.CH.value',
   IQ: 'attributes.IQ.value',
-  HT: 'attributes.HT.value',
-  WILL: 'attributes.WILL.value',
-  Will: 'attributes.WILL.value',
-  PER: 'attributes.PER.value',
-  Per: 'attributes.PER.value',
+  TC: 'attributes.TC.value',
+  WL: 'attributes.WL.value',
+  ED: 'attributes.ED.value',
   Vision: 'vision',
   VISION: 'vision',
   FRIGHTCHECK: 'frightcheck',
@@ -1456,7 +1479,7 @@ Hooks.once('init', async function () {
   // Register sheet application classes
   Actors.unregisterSheet('core', ActorSheet)
   Actors.registerSheet('gurps', GurpsActorSheet, {
-    label: 'Full (GCS)',
+    label: 'Full (GCS+5E)',
     makeDefault: true,
   })
   Actors.registerSheet('gurps', GurpsActorCombatSheet, {

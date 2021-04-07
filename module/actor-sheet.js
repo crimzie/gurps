@@ -1239,7 +1239,7 @@ export class GurpsActorCombatSheet extends GurpsActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ['gurps', 'sheet', 'actor'],
       template: 'systems/gurps/templates/combat-sheet.html',
-      width: 600,
+      width: 700,
       height: 275,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
       dragDrop: [{ dragSelector: '.item-list .item', dropSelector: null }],
@@ -1256,7 +1256,7 @@ export class GurpsActorEditorSheet extends GurpsActorSheet {
       scrollY: [
         '.gurpsactorsheet #advantages #reactions #melee #ranged #skills #spells #equipment #other_equipment #notes',
       ],
-      width: 800,
+      width: 900,
       height: 800,
       tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
       dragDrop: [{ dragSelector: '.item-list .item', dropSelector: null }],

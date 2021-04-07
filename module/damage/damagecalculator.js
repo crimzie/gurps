@@ -196,14 +196,17 @@ export class CompositeDamageCalculator {
 
       // find the location with the lowest DR
       for (let value of this._defender.hitLocationsWithDR.filter(it => it.roll.length > 0)) {
-        if (value.dr < lowestDR) lowestDR = value.dr
-        if (value.where === 'Torso') torsoDR = value.dr
+        let dr = this.isCrushing ? value.cdr : value.dr
+        if (dr < lowestDR) lowestDR = dr
+        if (value.where === 'Torso') torsoDR = dr
+        else if (value.where === 'Chest' && torsoDR === 0) torsoDR = dr
       }
       // return the average of torso and lowest dr
       return Math.ceil((lowestDR + torsoDR) / 2)
     }
 
-    return this._defender.hitLocationsWithDR.filter(it => it.where === this._hitLocation).map(it => it.dr)[0]
+    let loc = this._defender.hitLocationsWithDR.filter(it => it.where === this._hitLocation)
+    return loc.map(it => this.isCrushing ? it.cdr : it.dr)[0]
   }
 
   get effects() {
@@ -471,6 +474,10 @@ export class CompositeDamageCalculator {
 
   get isCrippleableLocation() {
     return [hitlocation.EXTREMITY, hitlocation.LIMB].includes(this.hitLocationRole) || this._hitLocation === 'Eye'
+  }
+
+  get isCrushing() {
+    return this.damageType === 'cr'
   }
 
   get isBluntTraumaInjury() {
@@ -882,8 +889,7 @@ class DamageCalculator {
   get calculatedBluntTrauma() {
     if (this.effectiveDamage === 0 || this.penetratingDamage > 0) return 0
     if (!bluntTraumaTypes.includes(this._parent.damageType)) return 0
-    if (this._parent.damageType === 'cr') return Math.floor(this.effectiveDamage / 5)
-    return Math.floor(this.effectiveDamage / 10)
+    return Math.ceil(this.effectiveDamage / 5)
   }
 
   get effectiveBluntTrauma() {

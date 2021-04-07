@@ -78,6 +78,7 @@
             <header>{{localize "GURPS.location"}}</header>
             <header>{{localize "GURPS.roll"}}</header>
             <header>{{localize "GURPS.hitLocationDR"}}</header>
+            <header>{{localize "GURPS.hitLocationCDR"}}</header>
 
             {{#each CALC.hitLocationsWithDR}}
             <div>
@@ -89,6 +90,7 @@
             </div>
             <div>{{this.rollText}}</div>
             <div>{{this.dr}}</div>
+            <div>{{this.cdr}}</div>
             {{/each}}
           </div>
 

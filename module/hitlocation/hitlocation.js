@@ -25,9 +25,10 @@ export class HitLocation {
   static BRAIN = 'Brain'
   static DEFAULT = '-'
 
-  constructor(loc = '', dr = '0', penalty = '', roll = HitLocation.DEFAULT, equipment = '') {
+  constructor(loc = '', dr = '0', cdr = '0', penalty = '', roll = HitLocation.DEFAULT, equipment = '') {
     this.where = loc
     this.dr = dr
+    this.cdr = cdr
     this.equipment = equipment
     this.penalty = penalty
     this.roll = roll
@@ -38,8 +39,8 @@ export class HitLocation {
     hitlocationRolls = {
       Eye: { roll: '-', penalty: -9, skip: true },
       Eyes: { roll: '-', penalty: -9 }, // GCA
-      Skull: { roll: '3-4', penalty: -7 },
-      'Skull, from behind': { penalty: -5 },
+      Skull: { roll: '3-4', dr: 2, penalty: -7 },
+      'Skull, from behind': { penalty: -5, dr: 2 },
       Face: { roll: '5', penalty: -5 },
       'Face, from behind': { penalty: -7 },
       Nose: { penalty: -7, desc: 'front only, *hit chest' },
@@ -90,17 +91,18 @@ export class HitLocation {
 
     humanoidHitLocations = {
       Eye: { roll: '-', penalty: -9 },
-      Skull: { roll: '3-4', penalty: -7 },
+      Skull: { roll: '3-4', dr: 2, penalty: -7 },
       Face: { roll: '5', penalty: -5 },
       'Right Leg': { roll: '6-7', penalty: -2, role: LIMB },
       'Right Arm': { roll: '8', penalty: -2, role: LIMB },
-      Torso: { roll: '9-10', penalty: 0 },
-      Groin: { roll: '11', penalty: -3 },
+      Chest: { roll: '9-10', penalty: -1 },
+      Abdomen: { roll: '11', penalty: -2 },
       'Left Arm': { roll: '12', penalty: -2, role: LIMB },
       'Left Leg': { roll: '13-14', penalty: -2, role: LIMB },
       Hand: { roll: '15', penalty: -4, role: EXTREMITY },
       Foot: { roll: '16', penalty: -4, role: EXTREMITY },
       Neck: { roll: '17-18', penalty: -5 },
+      Groin: { roll: '-', penalty: -3 },
       Vitals: { roll: '-', penalty: -3 },
     }
 
@@ -388,6 +390,7 @@ export class HitLocation {
       entry.prefix.forEach(it => {
         let location = new HitLocation()
         location.dr = this.dr
+        location.cdr = this.cdr
         location.equipment = this.equipment
         location.where = `${it} ${this.where}`
         locations.push(location)
