@@ -316,7 +316,7 @@ export default class DamageChat {
     }
 
     const damageType = diceData.damageType
-    let html = await renderTemplate('systems/gurps/templates/damage-message-wrapper.html', {
+    let html = await renderTemplate('systems/gurpsf/templates/damage-message-wrapper.html', {
       draggableData: draggableData,
       verb: diceData.verb,
       dice: diceData.diceText,

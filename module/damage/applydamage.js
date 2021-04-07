@@ -56,7 +56,7 @@ export default class ApplyDamageDialog extends Application {
     return mergeObject(super.defaultOptions, {
       classes: ['boilerplate', 'sheet', 'actor'],
       id: 'apply-damage-dialog',
-      template: 'systems/gurps/templates/apply-damage/apply-damage-dialog.html',
+      template: 'systems/gurpsf/templates/apply-damage/apply-damage-dialog.html',
       resizable: true,
       minimizable: false,
       width: 800,
@@ -424,7 +424,7 @@ export default class ApplyDamageDialog extends Application {
   }
 
   async _renderTemplate(template, data) {
-    return renderTemplate('systems/gurps/templates/apply-damage/' + template, data)
+    return renderTemplate('systems/gurpsf/templates/apply-damage/' + template, data)
   }
 
   /**

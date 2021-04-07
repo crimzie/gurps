@@ -8,7 +8,7 @@ export class GurpsItemSheet extends ItemSheet {
 	static get defaultOptions() {
 	  return mergeObject(super.defaultOptions, {
 			classes: ["gurps", "sheet", "item"],
-			template: "systems/gurps/templates/item-sheet.html",
+			template: "systems/gurpsf/templates/item-sheet.html",
 			width: 520,
 			height: 480,
       tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description"}]

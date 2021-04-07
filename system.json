@@ -1,8 +1,8 @@
 {
-  "name": "gurps5ef",
+  "name": "gurpsf",
   "title": "GURPS 4th Edition Game Aid (Unofficial) fork",
   "description": "A game aid to help play GURPS 4e for Foundry VTT (GCS/GCA edition)",
-  "version": "0.8.22c",
+  "version": "0.8.221",
   "minimumCoreVersion": "0.7.5",
   "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,

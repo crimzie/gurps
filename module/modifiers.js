@@ -318,7 +318,7 @@ export class ModifierBucketEditor extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: 'ModifierBucketEditor',
-      template: 'systems/gurps/templates/modifier-bucket-tooltip.html',
+      template: 'systems/gurpsf/templates/modifier-bucket-tooltip.html',
       width: 900,
       height: 800,
       resizeable: false,

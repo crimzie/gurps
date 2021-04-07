@@ -15,56 +15,66 @@
 					"points": 0,
 					"dtype": "Number"
 				},
+				"RF": {
+					"value": 10,
+					"points": 0,
+					"dtype": "Number"
+				},
+				"AW": {
+					"value": 10,
+					"points": 0,
+					"dtype": "Number"
+				},
+				"CH": {
+					"value": 10,
+					"points": 0,
+					"dtype": "Number"
+				},
 				"IQ": {
 					"value": 10,
 					"points": 0,
 					"dtype": "Number"
 				},
-				"HT": {
+				"TC": {
 					"value": 10,
 					"points": 0,
 					"dtype": "Number"
 				},
-				"WILL": {
+				"WL": {
 					"value": 10,
 					"points": 0,
 					"dtype": "Number"
 				},
-				"PER": {
+				"ED": {
 					"value": 10,
 					"points": 0,
 					"dtype": "Number"
 				}
 			},
 			"HP": {
-				"value": 0,
-				"min": 0,
-				"max": 0,
+				"value": 10,
+				"min": -50,
+				"max": 10,
 				"points": 0
 			},
 			"FP": {
-				"value": 0,
-				"min": 0,
-				"max": 0,
+				"value": 10,
+				"min": -50,
+				"max": 10,
 				"points": 0
 			},
 			"dodge": {
-				"value": 0,
+				"value": 10,
 				"enc_level": 0
 			},
 			"basicmove": {
-				"value": "0",
-				"points": 0
-			},
-			"basicspeed": {
-				"value": "0",
+				"value": "5",
 				"points": 0
 			},
 			"parry": 0,
-			"currentmove": 0,
+			"currentmove": 5,
 			"thrust": "",
 			"swing": "",
-			"frightcheck": 0,
 			"hearing": 0,
 			"tastesmell": 0,
 			"vision": 0,
@@ -115,7 +125,7 @@
 					"where": "Eye"
 				},
 				"00001": {
-					"dr": "0",
+					"dr": "2",
 					"equipment": "",
 					"penalty": "-7",
 					"roll": "",
@@ -145,16 +155,16 @@
 				"00005": {
 					"dr": "0",
 					"equipment": "",
-					"penalty": "0",
+					"penalty": "-1",
 					"roll": "",
-					"where": "Torso"
+					"where": "Chest"
 				},
 				"00006": {
 					"dr": "0",
 					"equipment": "",
-					"penalty": "-3",
+					"penalty": "-2",
 					"roll": "",
-					"where": "Groin"
+					"where": "Abdomen"
 				},
 				"00007": {
 					"dr": "0",
@@ -197,45 +207,52 @@
 					"penalty": "-3",
 					"roll": "",
 					"where": "Vitals"
+				},
+				"00013": {
+					"dr": "0",
+					"equipment": "",
+					"penalty": "-3",
+					"roll": "",
+					"where": "Groin"
 				}
 			},
 			"encumbrance": {
-        "00000" : { 
-          "key": "enc0",
-          "level": 0,
-          "dodge": 0,
-          "weight": 0,
-          "move": 0
-        },
-        "00001" : { 
-          "key": "enc1",
-          "level": 1,
-          "dodge": 0,
-          "weight": 0,
-          "move": 0
-        },
-        "00002" : { 
-          "key": "enc2",
-          "level": 2,
-          "dodge": 0,
-          "weight": 0,
-          "move": 0
-        },
-        "00003" : { 
-          "key": "enc3",
-          "level": 3,
-          "dodge": 0,
-          "weight": 0,
-          "move": 0
-        },
-        "00004" : { 
-          "key": "enc4",
-          "level": 4,
-          "dodge": 0,
-          "weight": 0,
-          "move": 0
-        }
-      },
+                                "00000" : { 
+                                  "key": "enc0",
+                                  "level": 0,
+                                  "dodge": 0,
+                                  "weight": 0,
+                                  "move": 0
+                                },
+                                "00001" : { 
+                                  "key": "enc1",
+                                  "level": 1,
+                                  "dodge": 0,
+                                  "weight": 0,
+                                  "move": 0
+                                },
+                                "00002" : { 
+                                  "key": "enc2",
+                                  "level": 2,
+                                  "dodge": 0,
+                                  "weight": 0,
+                                  "move": 0
+                                },
+                                "00003" : { 
+                                  "key": "enc3",
+                                  "level": 3,
+                                  "dodge": 0,
+                                  "weight": 0,
+                                  "move": 0
+                                },
+                                "00004" : { 
+                                  "key": "enc4",
+                                  "level": 4,
+                                  "dodge": 0,
+                                  "weight": 0,
+                                  "move": 0
+                                }
+                        },
 			"notes": {},
 			"equipment": {
 				"carried": {},

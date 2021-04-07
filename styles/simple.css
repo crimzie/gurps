@@ -1113,8 +1113,8 @@ body {
 #location {
   grid-area: location;
   grid-template:
-    'header header header header'
-    'roll where penalty dr';
+    'header header header header header'
+    'roll where penalty dr dr';
   grid-template-rows: 0fr 0fr;
   grid-auto-rows: 1fr;
 }
@@ -1307,10 +1307,11 @@ body {
 #encumbrance .dodge:nth-last-child(10n + 1),
 #lifting .liftdesc:nth-last-child(4n + 1),
 #lifting .lift:nth-last-child(4n + 2),
-#location .roll:nth-last-child(8n + 4),
-#location .where:nth-last-child(8n + 3),
-#location .penalty:nth-last-child(8n + 2),
-#location .dr:nth-last-child(8n + 1),
+#location .roll:nth-last-child(10n + 5),
+#location .where:nth-last-child(10n + 4),
+#location .penalty:nth-last-child(10n + 3),
+#location .dr:nth-last-child(10n + 2),
+#location .dr:nth-last-child(10n + 1),
 #reactions .modifier:nth-child(even),
 #reactions .situation:nth-child(odd),
 #melee .desc:nth-child(even),
@@ -1498,16 +1499,17 @@ body {
   font-size: 80%;
 }
 
-#location .header:nth-last-child(8n + 4),
-#location .header:nth-last-child(8n + 3),
-#location .header:nth-last-child(8n + 2),
-#location .header:nth-last-child(8n + 1) {
+#location .header:nth-last-child(10n + 5),
+#location .header:nth-last-child(10n + 4),
+#location .header:nth-last-child(10n + 3),
+#location .header:nth-last-child(10n + 2),
+#location .header:nth-last-child(10n + 1) {
   background-color: black;
 }
 
 #encumbrance > div:nth-last-child(-n + 5),
 #lifting > div:nth-last-child(-n + 2),
-#location > div:nth-last-child(-n + 4) {
+#location > div:nth-last-child(-n + 5) {
   border-bottom: none;
 }
 
@@ -1764,8 +1766,8 @@ body {
   align-content: stretch;
   grid-area: combat-location;
   grid-template:
-    'header header header  header'
-    'roll   where  penalty dr';
+    'header header header  header header'
+    'roll   where  penalty dr     dr';
   grid-template-rows: 0fr 0fr;
   grid-auto-rows: 1fr;
   padding-top: 0;
@@ -1806,21 +1808,21 @@ body {
 #combat-encumber .load:nth-last-child(10n + 3),
 #combat-encumber .move:nth-last-child(10n + 2),
 #combat-encumber .dodge:nth-last-child(10n + 1),
-#combat-location .roll:nth-last-child(8n + 4),
-#combat-location .where:nth-last-child(8n + 3),
-#combat-location .penalty:nth-last-child(8n + 2),
-#combat-location .dr:nth-last-child(8n + 1) {
-  background-color: #e8ffe8;
-}
+#combat-location .roll:nth-last-child(10n + 5),
+#combat-location .where:nth-last-child(10n + 4),
+#combat-location .penalty:nth-last-child(10n + 3),
+#combat-location .dr:nth-last-child(10n + 2),
+#combat-location .dr:nth-last-child(10n + 1) { background-color: #e8ffe8; }
 
-#combat-location .header:nth-last-child(8n + 4),
-#combat-location .header:nth-last-child(8n + 3),
-#combat-location .header:nth-last-child(8n + 2),
-#combat-location .header:nth-last-child(8n + 1) {
+#combat-location .header:nth-last-child(10n + 5),
+#combat-location .header:nth-last-child(10n + 4),
+#combat-location .header:nth-last-child(10n + 3),
+#combat-location .header:nth-last-child(10n + 2),
+#combat-location .header:nth-last-child(10n + 1) {
   background-color: black;
 }
 
-#combat-location > div:nth-last-child(-n + 4) {
+#combat-location > div:nth-last-child(-n + 5) {
   border-bottom: none;
 }
 
@@ -1865,7 +1867,7 @@ body {
 }
 
 #combat-encumber > div:nth-last-child(-n + 5),
-#combat-location > div:nth-last-child(-n + 4) {
+#combat-location > div:nth-last-child(-n + 5) {
   border-bottom: none;
 }
 
