@@ -18,6 +18,7 @@ import { d6ify, recurselist, getAllActorsInActiveScene, atou, utoa } from '../li
 import { ThreeD6 } from '../lib/threed6.js'
 import { doRoll } from '../module/dierolls/dieroll.js'
 import { ResourceTrackerManager } from './actor/resource-tracker-manager.js'
+import { DamageTables, initializeDamageTables } from '../module/damage/damage-tables.js'
 
 export const GURPS = {}
 window.GURPS = GURPS // Make GURPS global!
@@ -47,7 +48,6 @@ import addChatHooks from './chat.js'
 
 import GURPSConditionalInjury from './injury/foundry/conditional-injury.js'
 import { HitLocation } from './hitlocation/hitlocation.js'
-import { damageTypeMap, woundModifiers } from './damage/damage-tables.js'
 
 addChatHooks()
 jqueryHelpers()
@@ -494,6 +494,34 @@ GURPS.SJGProductMappings = {
 
 GURPS.USER_GUIDE_URL = 'https://bit.ly/2JaSlQd'
 
+function escapeUnicode(str) {
+    return str.replace(/[^\0-~]/g, function(ch) {
+        return "&#x" + (("0000" + ch.charCodeAt().toString(16).toUpperCase()).slice(-4)) + ";"
+    });
+}
+GURPS.escapeUnicode = escapeUnicode
+
+/**
+ * Read text data from a user provided File object
+ * Stolen from Foundry, and replaced 'readAsText' with 'readAsBinaryString' to save unicode characters.
+ * @param {File} file           A File object
+ * @return {Promise.<String>}   A Promise which resolves to the loaded text data
+ */
+function readTextFromFile(file) {
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = ev => {
+      resolve(reader.result);
+    };
+    reader.onerror = ev => {
+      reader.abort();
+      reject();
+    };
+    reader.readAsBinaryString(file);
+  });
+}
+GURPS.readTextFromFile = readTextFromFile
+
 // This is an ugly hack to clean up the "formatted text" output from GCS FG XML.
 // First we have to remove non-printing characters, and then we want to replace
 // all <p>...</p> with .../n before we try to convert to JSON.   Also, for some reason,
@@ -501,7 +529,8 @@ GURPS.USER_GUIDE_URL = 'https://bit.ly/2JaSlQd'
 // we will base64 encode it, and the decode it in the Named subclass setNotes()
 function cleanUpP(xml) {
   // First, remove non-ascii characters
-  xml = xml.replace(/[^ -~]+/g, '')
+  // xml = xml.replace(/[^ -~]+/g, '')
+  xml = GURPS.escapeUnicode(xml)
 
   // Now try to remove any lone " & " in names, etc.  Will only occur in GCA output
   xml = xml.replace(/ & /g, ' &amp; ')
@@ -565,16 +594,13 @@ function trim(s) {
 }
 GURPS.trim = trim
 
-function executeOTF (string, priv = false) {
+function executeOTF(string, priv = false) {
   if (!string) return
   string = string.trim()
-  if (string[0] == '[' && string[string.length-1] == ']')
-    string = string.substring(1,string.length-1)
+  if (string[0] == '[' && string[string.length - 1] == ']') string = string.substring(1, string.length - 1)
   let action = parselink(string)
-  if (!!action.action) 
-    GURPS.performAction(action.action, GURPS.LastActor || game.user, { shiftKey: priv });
-  else
-    ui.notifications.warn(`"${string}" did not parse into a valid On-the-Fly formula`);
+  if (!!action.action) GURPS.performAction(action.action, GURPS.LastActor || game.user, { shiftKey: priv })
+  else ui.notifications.warn(`"${string}" did not parse into a valid On-the-Fly formula`)
 }
 GURPS.executeOTF = executeOTF
 
@@ -782,17 +808,29 @@ async function performAction(action, actor, event, targets) {
     if (!!actor) {
       let att = null
       prefix = ''
-      thing = action.name
-      att = GURPS.findAttack(actordata, thing)
+      att = GURPS.findAttack(actordata, action.name) // find attack possibly using wildcards
       if (!att) {
         ui.notifications.warn(
           "No melee or ranged attack named '" + action.name.replace('<', '&lt;') + "' found on " + actor.name
         )
         return false
       }
-      thing = att.name
-      target = parseInt(att.level)
+      thing = att.name  // get real name of attack
+      let t = att.level
+      if (!!t) {
+        let a = t.trim().split(' ')
+        t = a[0]
+        if (!!t) target = parseInt(t)
+        if (isNaN(target)) target = 0
+        // Can't roll against a non-integer
+        else {
+          a.shift()
+          let m = a.join(' ')
+          if (!!m) ui.modifierbucket.addModifier(0, m)    //  Level may have "*Costs xFP"
+        }
+      }
       formula = '3d6'
+      if (!!action.costs) GURPS.ModifierBucket.addModifier(0, action.costs)
       if (!!action.mod) targetmods.push(GURPS.ModifierBucket.makeModifier(action.mod, action.desc))
       if (!!att.mode) opt.text = "<span style='font-size:85%'>(" + att.mode + ')</span>'
     } else ui.notifications.warn('You must have a character selected')
@@ -1449,11 +1487,10 @@ Hooks.once('init', async function () {
 
   ui.modifierbucket = GURPS.ModifierBucket
   ui.modifierbucket.render(true)
-
-  const v = game.settings.get(settings.SYSTEM_NAME, settings.SETTING_CHANGELOG_VERSION) || '0.0.1'
 })
 
 Hooks.once('ready', async function () {
+  initializeDamageTables()
   ResourceTrackerManager.initSettings()
   GURPS.ModifierBucket.clear()
   GURPS.ThreeD6.refresh()
@@ -1483,15 +1520,35 @@ Hooks.once('ready', async function () {
     .filter(it => !!it.tracker.isDamageType)
     .filter(it => !!it.tracker.alias)
     .map(it => it.tracker)
-  resourceTrackers.forEach(it => (damageTypeMap[it.alias] = it.alias))
+  resourceTrackers.forEach(it => (DamageTables.damageTypeMap[it.alias] = it.alias))
   resourceTrackers.forEach(
     it =>
-      (woundModifiers[it.alias] = {
+      (DamageTables.woundModifiers[it.alias] = {
         multiplier: 1,
         label: it.name,
         resource: true,
       })
   )
+
+  Hooks.on('hotbarDrop', async (bar, data, slot) => {
+    console.log(data)
+    if (!data.otf) return
+    let cmd = `GURPS.executeOTF('${data.otf}')`
+    let name = `OtF: ${data.otf}`
+    if (!!data.actor) {
+      cmd = `let actor = game.actors.get('${data.actor}')
+GURPS.SetLastActor(actor)
+` + cmd
+      name = game.actors.get(data.actor).name + " " + name
+    }
+    let macro = await Macro.create({
+      name: name,
+      type: 'script',
+      command: cmd,
+    })
+    game.user.assignHotbarMacro(macro, slot)
+    return false
+  })
 
   Hooks.on('renderCombatTracker', function (a, html, c) {
     // use class 'bound' to know if the drop event is already bound
@@ -1601,30 +1658,63 @@ Hooks.once('ready', async function () {
   /**
    * Add a listener to handle damage being dropped on a token.
    */
-  Hooks.on('dropCanvasData', function (canvas, dropData) {
-    let grid_size = canvas.scene.data.grid
-    let old = new Set(game.user.targets)
-    let numberTargets = canvas.tokens.targetObjects({
-      x: dropData.x - grid_size / 2,
-      y: dropData.y - grid_size / 2,
-      height: grid_size,
-      width: grid_size,
-      releaseOthers: true,
-    })
-
-    // actual targets are stored in game.user.targets
-    if (game.user.targets.size === 1) {
-      let keys = game.user.targets.keys()
-      let first = keys.next()
-      if (dropData.type === 'damageItem') {
+  Hooks.on('dropCanvasData', async function (canvas, dropData) {
+    if (dropData.type === 'damageItem') {
+      let oldselection = new Set(game.user.targets) // remember current targets (so we can reselect them afterwards)
+      let grid_size = canvas.scene.data.grid
+      canvas.tokens.targetObjects({
+        x: dropData.x - grid_size / 2,
+        y: dropData.y - grid_size / 2,
+        height: grid_size,
+        width: grid_size,
+        releaseOthers: true,
+      })
+      
+      let handleDamage = (actor) => {   // Reset selection back to original, and drop damage
         for (let t of game.user.targets) {
           t.setTarget(false, { releaseOthers: false, groupSelection: true })
         }
-        old.forEach(t => {
+        oldselection.forEach(t => {
           t.setTarget(true, { releaseOthers: false, groupSelection: true })
         })
-        first.value.actor.handleDamageDrop(dropData.payload)
+        actor.handleDamageDrop(dropData.payload)
       }
+
+      // actual targets are stored in game.user.targets
+      if (game.user.targets.size === 0) return false
+      if (game.user.targets.size === 1) {
+        let targets = [...game.user.targets]
+        handleDamage(targets[0].actor)
+        return false
+      }
+
+      let buttons = {
+        apply: {
+          icon: '<i class="fas fa-check"></i>',
+          label: game.i18n.localize('GURPS.addApply'),
+          callback: html => {
+            let name = html.find('select option:selected').text().trim()
+            let target = [...game.user.targets].find(token => token.name === name)
+            handleDamage(target.actor)
+          },
+        },
+      }
+
+      let d = new Dialog(
+        {
+          title: game.i18n.localize('GURPS.selectToken'),
+          content: await renderTemplate('systems/gurps/templates/apply-damage/select-token.html', {
+            tokens: game.user.targets,
+          }),
+          buttons: buttons,
+          default: 'apply',
+          tokens: game.user.targets,
+        },
+        { width: 300 }
+      )
+      await d.render(true)
+
+      return false
     }
   })
 
