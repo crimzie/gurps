@@ -1351,7 +1351,8 @@ export class GurpsActorEditorSheet extends GurpsActorSheet {
             let hit = hitlocationTable[loc]
             let originalLoc = Object.values(oldlocations).filter(it => it.where === loc)
             let dr = originalLoc.length === 0 ? 0 : originalLoc[0]?.dr
-            let it = new HitLocation(loc, dr, hit.penalty, hit.roll)
+            let cdr = originalLoc.length === 0 ? 0 : originalLoc[0]?.cdr
+            let it = new HitLocation(loc, dr, cdr, hit.penalty, hit.roll)
             game.GURPS.put(hitlocations, it, count++)
           }
           await this.actor.update({

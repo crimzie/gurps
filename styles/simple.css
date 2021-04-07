@@ -2159,6 +2159,15 @@ body {
   text-align: left;
 }
 
+.gurps-4col {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-auto-rows: auto;
+  border: none;
+  justify-items: stretch;
+  text-align: left;
+}
+
 .grid-2col > *,
 .gurps-3col > * {
   align-self: center;
@@ -2174,7 +2183,11 @@ body {
 .gurps-2col > *:nth-child(4n + 4),
 .gurps-3col > *:nth-of-type(6n + 4),
 .gurps-3col > *:nth-of-type(6n + 5),
-.gurps-3col > *:nth-of-type(6n + 6) {
+.gurps-3col > *:nth-of-type(6n + 6),
+.gurps-4col > *:nth-of-type(8n + 5),
+.gurps-4col > *:nth-of-type(8n + 6),
+.gurps-4col > *:nth-of-type(8n + 7),
+.gurps-4col > *:nth-of-type(8n + 8) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -2183,7 +2196,12 @@ body {
 .gurps-radio-col {
   grid-template-columns: auto 1fr min-content;
 }
+.gurps-radio-4col {
+  grid-template-columns: auto 1fr min-content min-content;
+}
 
+.gurps-radio-4col > *:nth-child(4n + 3),
+.gurps-radio-4col > *:nth-child(4n + 4),
 .gurps-radio-col > *:nth-child(3n + 3) {
   text-align: end;
   padding-right: 0.5em;
@@ -2191,6 +2209,7 @@ body {
   justify-content: flex-end;
 }
 
+.gurps-radio-4col > *:nth-child(4n + 3),
 .gurps-radio-col > *:nth-child(3n + 2) {
   text-align: center;
 }

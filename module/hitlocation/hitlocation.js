@@ -91,7 +91,7 @@ export class HitLocation {
 
     humanoidHitLocations = {
       Eye: { roll: '-', penalty: -9 },
-      Skull: { roll: '3-4', dr: 2, penalty: -7 },
+      Skull: { roll: '3-4', dr: 2, cdr: 2, penalty: -7 },
       Face: { roll: '5', penalty: -5 },
       'Right Leg': { roll: '6-7', penalty: -2, role: LIMB },
       'Right Arm': { roll: '8', penalty: -2, role: LIMB },

@@ -507,7 +507,7 @@ export class GurpsActor extends Actor {
         locations = locations.filter(it => it.where !== key)
       } else {
         // Didn't find loc that should be in the table.   Make a default entry
-        temp.push(new HitLocations.HitLocation(key, 0, table[key].penalty, table[key].roll))
+        temp.push(new HitLocations.HitLocation(key, 0, 0, table[key].penalty, table[key].roll))
       }
     })
     locations.forEach(it => temp.push(it))
@@ -1242,10 +1242,13 @@ export class GurpsActor extends Actor {
         rollText = table[value.where].roll
       if (!rollText) rollText = HitLocations.HitLocation.DEFAULT
       let dr = parseInt(value.dr)
+      let cdr = parseInt(value.cdr)
       if (isNaN(dr)) dr = 0
+      if (isNaN(cdr)) cdr = 0
       myhitlocations.push({
         where: value.where,
         dr: dr,
+        cdr: cdr,
         roll: convertRollStringToArrayOfInt(rollText),
         rollText: rollText,
       })

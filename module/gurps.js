@@ -1523,7 +1523,7 @@ Hooks.once('ready', async function () {
   const changelogVersion = SemanticVersion.fromString(v)
   const curVersion = SemanticVersion.fromString(game.system.data.version)
 
-  if (curVersion.isHigherThan(changelogVersion)) {
+  if (false) {//curVersion.isHigherThan(changelogVersion)) {
     if ($(ui.chat.element).find('#GURPS-LEGAL').length == 0)
       // If it isn't already in the chat log somewhere
       ChatMessage.create({

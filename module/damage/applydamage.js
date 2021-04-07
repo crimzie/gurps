@@ -49,7 +49,6 @@ export default class ApplyDamageDialog extends Application {
       .map(it => {
         return { name: it.tracker.name, alias: it.tracker.alias }
       })
-    console.log(this._resourceLabels)
   }
 
   static get defaultOptions() {
@@ -59,7 +58,7 @@ export default class ApplyDamageDialog extends Application {
       template: 'systems/gurpsf/templates/apply-damage/apply-damage-dialog.html',
       resizable: true,
       minimizable: false,
-      width: 800,
+      width: 807,
       height: game.settings.get(settings.SYSTEM_NAME, settings.SETTING_SIMPLE_DAMAGE)
         ? simpleDialogHeight
         : standardDialogHeight,

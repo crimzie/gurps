@@ -186,10 +186,6 @@ export class CompositeDamageCalculator {
   get DR() {
     if (this._userEnteredDR !== null) return this._userEnteredDR
 
-    if (this._hitLocation === 'Random') return 0
-
-    // if (this._hitLocation === 'User Entered') return this._userEnteredDR
-
     if (this._hitLocation === 'Large-Area') {
       let lowestDR = Number.POSITIVE_INFINITY
       let torsoDR = 0
@@ -205,8 +201,8 @@ export class CompositeDamageCalculator {
       return Math.ceil((lowestDR + torsoDR) / 2)
     }
 
-    let loc = this._defender.hitLocationsWithDR.filter(it => it.where === this._hitLocation)
-    return loc.map(it => this.isCrushing ? it.cdr : it.dr)[0]
+    let loc = this._defender.hitLocationsWithDR.filter(it => it.where === this._hitLocation)[0] || {dr: 0, cdr: 0}
+    return this.isCrushing ? loc.cdr : loc.dr
   }
 
   get effects() {
@@ -1041,7 +1037,6 @@ class DamageCalculator {
     //     }
     // }
 
-    console.log(this)
     return _effects
   }
 
